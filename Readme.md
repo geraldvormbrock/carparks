@@ -37,13 +37,10 @@ This solution have not been retained because the user would have had to zoom in 
 * To find the nearest geolocation, the formula of haversine distance, the distance in between two geographical points, have been implemented.
 * In Poitiers URL for car-parks definition, geo_point_2d have been retained for its precision which is better than geo_shape.coordinates and geometry.coordinates have the same precision but is farest in the JSON tree.
 
-## A SpringBoot API which exposes 3 web services GET (Return code 200 if Ok):
-* one that displays the list of all car-parks : /car-parks
-* one that displays a car-park by its id : /car-park/{id}
-* one that display a list of car-parks ordered by position from nearest to farthest from a given position   
+## The web services GET (Return code 200 if Ok):
+* Display a list of car-parks ordered by position from nearest to farthest from a given position : /car-parks-from-position
 
-
-### This last rest service take the following JSON as entry.   
+### This rest service take the following JSON as entry.   
 * nbFreeCarPark is the number N of free car parks we want to return
 * countryCode is the country code (ex: fr) of the car park
 * town name is the town name where to find the car parks
