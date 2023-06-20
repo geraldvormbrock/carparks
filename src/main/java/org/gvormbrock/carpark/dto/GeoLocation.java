@@ -6,9 +6,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @Builder
+@NoArgsConstructor
 public class GeoLocation {
-    @NonNull
     private Double longitude;
-    @NonNull
     private Double latitude;
 }
