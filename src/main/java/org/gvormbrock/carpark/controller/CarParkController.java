@@ -28,28 +28,4 @@ public class CarParkController {
         return algoChooserService.listLimitCarParks(inputDto.getTownName(), inputDto.getCountryCode(),
                 inputDto.getGeoLocation(), inputDto.getNbFreeCarPark());
     }
-
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/car-parks")
-    public List<CarPark> listCarParks() {
-        return carParkService.findAll();
-    }
-
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/car-park/{id}")
-    public Optional<CarPark> findCarParkById(@PathVariable long id) {
-        return carParkService.findById(id);
-    }
-
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/car-park/{id}")
-    void deleteCarPark(@PathVariable Long id) {
-        Optional<CarPark> cp = carParkService.findById(id);
-        if (cp.isEmpty()) {
-            throw new NotFoundException(ErrorCode.CAR_PARK_NOT_FOUND, "The car park with id = " + id + " does not exist");
-        }
-        carParkService.delete(cp.get());
-    }
 }
