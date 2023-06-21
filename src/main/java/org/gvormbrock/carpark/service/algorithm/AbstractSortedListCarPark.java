@@ -3,6 +3,8 @@ package org.gvormbrock.carpark.service.algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.gvormbrock.carpark.dto.CarParkDto;
 import org.gvormbrock.carpark.dto.GeoLocation;
+import org.gvormbrock.carpark.exception.ErrorCode;
+import org.gvormbrock.carpark.exception.ErrorServerException;
 import org.gvormbrock.carpark.model.CarPark;
 
 import java.util.List;
@@ -32,5 +34,13 @@ public abstract class AbstractSortedListCarPark {
      * @throws JsonProcessingException if any Json exception occurs
      */
     public abstract List<CarParkDto> provideListOrderedByNearest(GeoLocation comparedGeoLocation) throws JsonProcessingException;
+
+    protected static void validate(GeoLocation comparedGeoLocation) {
+        if (comparedGeoLocation == null ||
+                comparedGeoLocation.getLatitude() == null ||
+                comparedGeoLocation.getLongitude() == null) {
+            throw new ErrorServerException(ErrorCode.JSON_MAL_FORMATTED, "GeoLocation is not defined.");
+        }
+    }
 
 }

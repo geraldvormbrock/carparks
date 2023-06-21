@@ -154,11 +154,7 @@ public class SortedListCarParkPoitiers extends AbstractSortedListCarParkTowns {
                 CarParkDto carParkDto = carParkToCarParkDtoMapper.map(carPark);
                 carParkDto.setCapacity(jsonCapacity.asInt());
                 carParkDto.setNbFreeLocations(jsonNbFreeLocation.asInt());
-                if (comparedGeoLocation == null ||
-                        comparedGeoLocation.getLatitude() == null ||
-                        comparedGeoLocation.getLongitude() == null) {
-                    throw new ErrorServerException(ErrorCode.JSON_MAL_FORMATTED, "GeoLocation is not defined.");
-                }
+                validate(comparedGeoLocation);
                 double distance = GeoUtil.calculateDistance(comparedGeoLocation, carParkDto.getGeoLocation()) * 1000D;
                 carParkDto.setDistanceInMeters((int) distance);
 
