@@ -80,11 +80,17 @@ public class SortedListCarParkPoitiers extends AbstractSortedListCarParkTowns {
             for (JsonNode jsonRecord : jsonRecords) {
                 CarPark carPark = new CarPark();
                 JsonNode jsonFields = getJsonNode(recordNum, jsonRecord, "fields");
+                if (jsonFields == null) {
+                    continue;
+                }
                 JsonNode jsonName = getJsonNode(recordNum, jsonFields, "nom");
+                if (jsonName == null) {
+                    continue;
+                }
                 carPark.setName(jsonName.asText().toUpperCase());
                 GeoLocation carParkGeoLocation = parseJsonGeoPoint2D(jsonFields, recordNum);
                 if (carParkGeoLocation == null) {
-                    LOGGER.error("fields.geo_point_2d does not exists in record " + recordNum + " in url=" + url);
+                    LOGGER.error("fields.geo_point_2d can not be loaded in record " + recordNum + " in url=" + url);
                     continue;
                 }
                 carPark.setLongitude(carParkGeoLocation.getLongitude());
@@ -118,16 +124,28 @@ public class SortedListCarParkPoitiers extends AbstractSortedListCarParkTowns {
             int recordNum = 0;
             for (JsonNode jsonRecord : jsonRecords) {
                 JsonNode jsonFields = getJsonNode(recordNum, jsonRecord, "fields");
+                if (jsonFields == null) {
+                    continue;
+                }
                 JsonNode jsonName = getJsonNode(recordNum, jsonFields, "nom");
+                if (jsonName == null) {
+                    continue;
+                }
                 JsonNode jsonCapacity = getJsonNode(recordNum, jsonFields, "capacite");
+                if (jsonCapacity == null) {
+                    continue;
+                }
                 JsonNode jsonNbFreeLocation = getJsonNode(recordNum, jsonFields, "places");
+                if (jsonNbFreeLocation == null) {
+                    continue;
+                }
                 String carParkName = jsonName.asText().toUpperCase();
                 CarPark carPark = getHashMapExistingCarPark().get(carParkName);
                 if (carPark == null) {
                     // The car park has not been referenced by loadCarParksInDB(), we can add it as we have its position
                     GeoLocation carParkGeoLocation = parseJsonGeoPoint2D(jsonFields, recordNum);
                     if (carParkGeoLocation == null) {
-                        LOGGER.error("fields.geo_point_2d does not exists in record " + recordNum + " in url=" + url);
+                        LOGGER.error("fields.geo_point_2d can not be loaded in record " + recordNum + " in url=" + url);
                         continue;
                     }
                     Town town = findTown();
@@ -162,7 +180,8 @@ public class SortedListCarParkPoitiers extends AbstractSortedListCarParkTowns {
                 geoLocation.setLongitude(jsonGeoPoints.get(0).asDouble());
                 geoLocation.setLatitude(jsonGeoPoints.get(1).asDouble());
             } catch (IndexOutOfBoundsException e) {
-                throw new ErrorServerException(ErrorCode.JSON_MAL_FORMATTED, "geo_point_2d has not longitude and latitude in " + (recordNum == null ? "json" : "jsonr record " + recordNum));
+                LOGGER.error("geo_point_2d has not longitude and latitude in " + (recordNum == null ? "json" : ("jsonr record " + recordNum)));
+                return null;
             }
         } else {
             return null;

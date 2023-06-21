@@ -62,8 +62,9 @@ public abstract class AbstractSortedListCarParkTowns extends AbstractSortedListC
     protected static JsonNode getJsonNode(Integer recordNum, JsonNode jsonRecord, String name) {
         JsonNode jsonFields = jsonRecord.get(name);
         if (jsonFields == null) {
-            throw new ErrorServerException(ErrorCode.JSON_MAL_FORMATTED,
-                    name + " can not be found in " + (recordNum == null ? "json" : "json record " + recordNum));
+            // Do not throw exception if error occurs
+            LOGGER.error(String.format("%s can not be found in %s.", name, recordNum == null ? "json" : ("json record " + recordNum)));
+            return null;
         }
         return jsonFields;
     }
