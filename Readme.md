@@ -131,7 +131,8 @@ A LoggingAspect class provide a log of all methods and their time to process. It
 
 There is one test class by package with one test example :
 * Controller : Integration test to call the web service
-* Service : Test the call to service and verify its interaction with the DB.
+* Service : Test the call to services and verify its interaction with DB or 
+test the main service AlgoChooserService and verify thrown exceptions.
 * Mapper : Verify the mapping Model <-> DTO
 * Repository : Tests have not been done as they look like service tests
 
