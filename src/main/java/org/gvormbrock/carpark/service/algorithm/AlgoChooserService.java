@@ -35,10 +35,10 @@ public class AlgoChooserService {
     private AbstractSortedListCarParkTowns findRightAlgorithmClass(String town, String countryCode) {
         List<AbstractSortedListCarParkTowns> candidates = algorithmList.stream().filter(x -> town.equals(x.getTownName()) && countryCode.equals(x.getCountryCode())).toList();
         if (candidates.isEmpty()) {
-            throw new ErrorServerException(ErrorCode.TOWN_NOT_FOUND, "The town " + town + " is not supported.");
+            throw new ErrorServerException(ErrorCode.TOWN_NOT_FOUND, "The town " + town + " in country " + countryCode + " is not supported.");
         }
         if (candidates.size() > 1) {
-            throw new ErrorServerException(ErrorCode.SERVER_ERROR, "The town " + town + " uses more then one algorithm.");
+            throw new ErrorServerException(ErrorCode.SERVER_ERROR, "The town " + town + " in country " + countryCode + " uses more than one algorithm.");
         }
         return candidates.get(0);
     }
