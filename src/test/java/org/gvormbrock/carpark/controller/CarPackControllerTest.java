@@ -21,7 +21,7 @@ public class CarPackControllerTest {
 
     @Test
     void testListCarParksFromPosition() throws Exception {
-        this.mvc.perform(MockMvcRequestBuilders.get("/car-park-from-position").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
+        this.mvc.perform(MockMvcRequestBuilders.get("/car-parks-from-position").accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON)
                         .content("""
                         {
                             "nbFreeCarPark": 3,
