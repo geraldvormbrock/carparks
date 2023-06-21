@@ -32,8 +32,9 @@ public class AlgoChooserServiceTest {
 
     @Test
     void testListLimitCarParks() throws JsonProcessingException {
-        List<CarParkDto> ret = algoChooserService.listLimitCarParks("Poitiers", "fr", new GeoLocation(46.58349874703973, 0.3450022616476489), 1);
+        List<CarParkDto> ret = algoChooserService.listLimitCarParks("Poitiers", "fr", new GeoLocation(46.58349874703973, 0.3450022616476489), 3);
         Assertions.assertEquals("NOTRE DAME", ret.get(0).getName());
+        Assertions.assertTrue(ret.size() >= 3);
     }
 
 }
